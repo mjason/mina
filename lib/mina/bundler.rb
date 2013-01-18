@@ -17,12 +17,12 @@ set_default :bundle_bin, 'bundle'
 # This path will be symlinked to `./shared/bundle` so that the gems cache will
 # be shared between all releases.
 
-set_default :bundle_path, './vendor/bundle'
+# set_default :bundle_path, './vendor/bundle'
 
 # ### bundle_options
 # Sets the options for installing gems via Bundler.
 
-set_default :bundle_options, lambda { %{--without development:test --path "#{bundle_path}" --binstubs bin/ --deployment} }
+# set_default :bundle_options, lambda { %{--without development:test --path "#{bundle_path}" --binstubs bin/ --deployment} }
 
 # ## Deploy tasks
 # These tasks are meant to be invoked inside deploy scripts, not invoked on
@@ -35,10 +35,8 @@ namespace :bundle do
   task :install do
     queue %{
       echo "-----> Installing gem dependencies using Bundler"
-      #{echo_cmd %[mkdir -p "#{deploy_to}/#{shared_path}/bundle"]}
-      #{echo_cmd %[mkdir -p "#{File.dirname bundle_path}"]}
-      #{echo_cmd %[ln -s "#{deploy_to}/#{shared_path}/bundle" "#{bundle_path}"]}
-      #{echo_cmd %[#{bundle_bin} install #{bundle_options}]}
+      
+      #{echo_cmd %[#{bundle_bin} install --deployment]}
     }
   end
 end
