@@ -36,7 +36,7 @@ namespace :bundle do
     queue %{
       echo "-----> Installing gem dependencies using Bundler"
       
-      #{echo_cmd %[#{bundle_bin} install --deployment]}
+      #{echo_cmd %[#{bundle_bin} install --without development:test]}
     }
   end
 end
